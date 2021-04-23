@@ -1,0 +1,11 @@
+{% extends 'Requests/conf.html' %}
+
+{% load static %}
+{% load lib_tags %}
+
+{% block message %}
+<p>Are you sure you want to delete request - <b>{{item}}</b>?</p>
+{% endblock %}
+{% block cancel %}
+<a href = "{% url 'request_portal' %}">Cancel</a>
+{% endblock %}

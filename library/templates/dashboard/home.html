@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load lib_tags %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<h1>Welcome, <small>{{ user.username }}</small>!</h1>
+<hr>
+<h2> You can now access the LMS!</h2>
+{% if request.user|has_group:"Librarians" %}
+{% else %}
+<h1 id="forloop-number">Borrowed Books({{bor_books.count}})</h1>
+<div class="row">
+  <div class="col-md-11">
+    <table class="table table-striped table-hover">
+      <thead>
+        <th>#</th>
+        <th>Book</th>
+        <th>Accepted at</th>
+        <th>For Days</th>
+        <th>Time Left</th>
+        <th>Deposit</th>
+        <th>Renew</th>
+      </thead>
+      <tbody>
+        {% for bor_book in bor_books %}
+        <tr>
+          <td><strong>{{ forloop.counter }} </strong></td>
+          <td><strong>{{bor_book.book.book_title}}</strong></td>
+          <td id = "event-box{{forloop.counter}}">{{bor_book.accepted|date:"M d, Y H:m:s"}}</td>
+          <td id = "days{{forloop.counter}}">{{bor_book.time}}</td>
+          <td id = "countdown-box{{forloop.counter}}"></td>
+          <td id = "deposit-box{{forloop.counter}}">
+            <a href="{% url 'deposit' bor_book.id %}">
+              <button class="btn btn-primary mx-3">Deposit</button>
+            </a>
+          </td>
+          <td>
+            {% if boolList|index:forloop.counter0 %}
+            <a href="{% url 'create_renew_request' bor_book.id %}">
+              <button class="btn btn-primary mx-3" disabled>Renew</button>
+            </a>
+            {% else %}
+            <a href="{% url 'create_renew_request' bor_book.id %}">
+              <button class="btn btn-primary mx-3">Renew</button>
+            </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+    </div>
+{% endif %}
+{% endblock %}
+{%block scripts%}
+  <script src = {% static 'main.js' %} defer></script>
+{% endblock %}

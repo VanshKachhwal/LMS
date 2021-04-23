@@ -1,0 +1,15 @@
+{% extends 'basic2.html' %}
+{% load static %}
+{% load lib_tags %}
+
+{% block body %}
+<center>
+<p>Are you sure you want to delete {{item.book_title}} from the records?</p>
+<form actions = "{% url 'delete' item.id %}" method ="POST">
+    {% csrf_token %}
+    <a href = "{% url 'library' %}">Cancel</a>
+    <input type = "submit" name = "Yes I'm sure"> 
+</form>
+</center>
+
+{% endblock %}

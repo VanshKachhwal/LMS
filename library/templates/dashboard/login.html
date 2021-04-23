@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<center>
+<div class="card" style="width: 30rem;">
+  <center>
+  <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h6>Don't have an account?<a href = "{% url 'signup' %}">Sign up</a></h6>
+    <h6>Signin with <a href = "{% url 'social:begin' 'google-oauth2' %}">Google</a></h6>
+    <h6>Signin with <a href = "{% url 'social:begin' 'facebook' %}">Facebook</a></h6>
+    <h6>Signin with <a href = "{% url 'social:begin' 'github' %}">Github</a></h6>
+    <button type="submit">Login</button>
+  </form>
+  </center>
+</div>
+</center>
+
+{% endblock %}

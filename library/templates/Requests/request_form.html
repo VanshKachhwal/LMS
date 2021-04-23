@@ -1,0 +1,20 @@
+{% extends 'basic2.html' %}
+{% load static %}
+{% load lib_tags %}
+
+{% block body %}
+<center>
+<form actions="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}" />
+  {% for field in form %}
+    <p>
+      {{ field.label_tag }}
+      {{ field }}<br> <small style="color: grey">{{ field.help_text|safe }}</small><br>
+    </p>
+  {% endfor %}
+  <input type="submit" name = "Submit"><nbsp></nbsp>
+  <a href = "{% url 'library' %}">Cancel</a>
+</form>
+</center>
+{% endblock %}

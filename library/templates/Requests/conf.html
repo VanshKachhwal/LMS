@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load lib_tags %}
+
+{% block content %}
+<center>
+<p>{% block message %}{% endblock %}</p>
+<form actions = "" method ="POST">
+    {% csrf_token %}
+    {% block cancel %}
+    {% endblock %}
+    <input type = "submit" name = "Yes I'm sure"> 
+</form>
+</center>
+
+{% endblock %}
