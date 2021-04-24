@@ -12,6 +12,7 @@ class Book(models.Model):
     book_publisher = models.CharField(max_length=50, default = "")
     genre = models.CharField(max_length=50, default="")
     availability = models.IntegerField(default=0)
+    times_borrowed = models.IntegerField(default =0)
     summary = models.CharField(max_length=300)
     isbn = models.CharField(max_length = 30)
     image = models.ImageField(upload_to='images', default="")

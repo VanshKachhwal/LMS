@@ -15,6 +15,9 @@ class AddBookForm(ModelForm):
 	class Meta:
 		model = Book
 		fields = '__all__'
+		widgets = {
+			'times_borrowed':forms.TextInput(attrs={'readonly': True}),
+		}
 
 class RequestForm(ModelForm):
 

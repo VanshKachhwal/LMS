@@ -4,6 +4,11 @@
 <div class="card" style="width: 80rem;">
 <center>
   <h2>Sign up</h2>
+  {% if message%}
+  <div class="alert alert-danger" role="alert">
+  {{message}}
+  </div>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
     {% for field in form %}

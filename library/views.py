@@ -11,7 +11,8 @@ from math import ceil
 import json
 from .models import Request, BookComment, Book, BorrowedBook
 from django.utils.timezone import now
-from django.db.models.query import QuerySet
+# from django.db.models.query import QuerySet
+from django.contrib.auth.models import User
 
 #Dashboard views
 def has_group(user, group_name):
@@ -20,6 +21,16 @@ def has_group(user, group_name):
 
 @login_required
 def home(request):
+	allProds = []
+	prod = Book.objects.all().order_by('-times_borrowed')
+	n = len(prod)
+	if n<=12:
+		nSlides = n//4 +ceil((n/4) - (n//4))
+		allProds.append([prod, range(1, nSlides), nSlides])
+	else:
+		n=12
+		nSlides = n//4 +ceil((n/4) - (n//4))
+		allProds.append([prod[:n], range(1, nSlides), nSlides])
 	bor_books = BorrowedBook.objects.filter(user = request.user)
 	boolList = []
 	for bor_book in bor_books:
@@ -27,23 +38,29 @@ def home(request):
 			boolList.append(True)
 		else:
 			boolList.append(False)
-	# print(boolList)
-	# print(Request.objects.all())
-	context = {'bor_books':bor_books, 'boolList' :boolList}
+	context = {'bor_books':bor_books, 'boolList' :boolList, 'allProds': allProds}
 	return render(request, 'dashboard/home.html', context)
 
 def signup(request):
+	message = None
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			user = form.save()
-			# user.refresh_from_db()
-			# login(request, user)
-			return redirect('/')
+			users = User.objects.filter(email = form.cleaned_data['email'])
+			if len(users)>=1:
+				form = SignUpForm()
+				message = "Email Id is already registered"
+				return render(request, 'dashboard/signup.html', {'form': form, 'message':message})
+			else:
+				form.save()
+				username = form.cleaned_data.get('username')
+				raw_password = form.cleaned_data.get('password1')
+				user = authenticate(username = username, password = raw_password)
+				login(request, user)
+				return redirect('/')
 	else:
 		form = SignUpForm()
-	return render(request, 'dashboard/signup.html', {'form': form})
-
+	return render(request, 'dashboard/signup.html', {'form': form, 'message':message})
 
 #Library views
 @login_required
@@ -115,7 +132,7 @@ def productView(request, myid):
 	return render(request, 'library/prodView.html', context)
 
 def searchMatch(query, item):
-    if query in item.summary.lower() or query in item.book_title.lower() or query in item.genre.lower() or query in item.book_author.lower() or query in item.isbn :
+    if query in query in item.book_title.lower() or query in item.genre.lower() or query in item.book_author.lower() or query in item.isbn :
         return True
     else:
         return False
@@ -171,6 +188,8 @@ def accept_request(request, id):
 	if request.method == "POST":
 		if req.renew == False:
 			book.rent()
+			book.times_borrowed+=1
+			book.save()
 			b = BorrowedBook(book = book, user = req.borrower_id, time = req.Days)
 			b.save()
 			req.delete()
