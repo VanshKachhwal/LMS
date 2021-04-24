@@ -31,6 +31,16 @@ def home(request):
 		n=12
 		nSlides = n//4 +ceil((n/4) - (n//4))
 		allProds.append([prod[:n], range(1, nSlides), nSlides])
+	newProds = []
+	prods = Book.objects.all().order_by('-date_added')
+	m = len(prods)
+	if m<=12:
+		mSlides = m//4 +ceil((m/4) - (m//4))
+		newProds.append([prods, range(1, mSlides), mSlides])
+	else:
+		m=12
+		mSlides = m//4 +ceil((m/4) - (m//4))
+		newProds.append([prods[:m], range(1, mSlides), mSlides])
 	bor_books = BorrowedBook.objects.filter(user = request.user)
 	boolList = []
 	for bor_book in bor_books:
@@ -38,7 +48,7 @@ def home(request):
 			boolList.append(True)
 		else:
 			boolList.append(False)
-	context = {'bor_books':bor_books, 'boolList' :boolList, 'allProds': allProds}
+	context = {'bor_books':bor_books, 'boolList' :boolList, 'allProds': allProds, 'newProds': newProds}
 	return render(request, 'dashboard/home.html', context)
 
 def signup(request):

@@ -16,6 +16,7 @@ class Book(models.Model):
     summary = models.CharField(max_length=300)
     isbn = models.CharField(max_length = 30)
     image = models.ImageField(upload_to='images', default="")
+    date_added = models.DateTimeField(default = now,editable = False)
 
     def __str__(self):
         return self.book_title
