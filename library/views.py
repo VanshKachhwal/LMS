@@ -94,7 +94,10 @@ def add_book(request):
 		if form.is_valid():
 			form.save()
 			return redirect('/library')
-	context = {'form': form}
+	message = None
+	if not has_group(request.user, "Librarians"):
+		message = "You don't have the authority to add a book!"		
+	context = {'form': form, 'message':message}
 	return render(request, 'library/book_form.html', context)
 
 @login_required
@@ -106,7 +109,10 @@ def update(request, id):
 		if form.is_valid():
 			form.save()
 			return redirect('/library')
-	context = {'form': form}
+	message = None
+	if not has_group(request.user, "Librarians"):
+		message = "You don't have the authority to update this book!"
+	context = {'form': form, 'message':message}
 	return render(request, 'library/book_form.html', context)
 
 @login_required
@@ -115,7 +121,10 @@ def delete(request, id):
 	if request.method == "POST":
 		book.delete()
 		return redirect('/library')
-	context = {'item': book}
+	message = None
+	if not has_group(request.user, "Librarians"):
+		message = "You don't have the authority to delete this book!"
+	context = {'item': book, 'message':message}
 	return render(request, 'library/delete.html', context)
 
 @login_required
@@ -177,7 +186,14 @@ def create_request(request, id):
 		if form.is_valid():
 			form.save()
 			return redirect('/library')
-	context = {'form': form}
+	message = None
+	if book.availability<=0:
+		message = "Sorry, this book is out of stock!!"
+	if Request.objects.filter(borrower_id = request.user, book_id = book).exists():
+		message = "You have already post a request for this book!"
+	if BorrowedBook.objects.filter(user = request.user, book = book).exists():
+		message = "You have already borrowed one of the copies of the book!"
+	context = {'form': form, 'message':message}
 	return render(request, "Requests/request_form.html", context)
 
 @login_required
@@ -209,7 +225,10 @@ def accept_request(request, id):
 			b.save()
 			req.delete()
 		return redirect('/request_portal')
-	context = {'item': req}
+	message = None
+	if not has_group(request.user, "Librarians"):
+		message = "You don't have the authority to accept requests!"
+	context = {'item': req, 'message':message}
 	return render(request, "Requests/ac_conf.html", context)
 
 @login_required
@@ -218,7 +237,10 @@ def delete_request(request, id):
 	if request.method == "POST":
 		req.delete()
 		return redirect('/request_portal')
-	context = {'item': req}
+	message = None
+	if request.user != req.borrower_id:
+		message = "This link is validated for the respective user only!"
+	context = {'item': req, 'message':message}
 	return render(request, "Requests/del_conf.html", context)
 
 @login_required
@@ -227,7 +249,10 @@ def reject_request(request, id):
 	if request.method == "POST":
 		req.delete()
 		return redirect('/request_portal')
-	context = {'item': req}
+	message = None
+	if not has_group(request.user, "Librarians"):
+		message = "You don't have the authority to reject requests, you can delete it yourself!"
+	context = {'item': req, 'message':message}
 	return render(request, "Requests/rj_conf.html", context)
 
 
@@ -255,6 +280,7 @@ def deposit(request, id):
 	book = bor_book.book
 	book.availability+=1
 	book.save()
+	Request.objects.filter(borrower_id= request.user, book_id = book).delete()
 	bor_book.delete()
 	return redirect('/')
 
@@ -273,5 +299,10 @@ def create_renew_request(request, id):
 			req.save()
 			print(req)
 			return redirect('/')
-	context = {'form': form}
+	message = None
+	if Request.objects.filter(borrower_id = request.user, book_id = book).exists():
+		message = "You have already post a request for this book!"
+	if request.user != bor_book.user:
+		message = "Renewing requests for this borrowed book is restricted for the respective user only!"
+	context = {'form': form, 'message':message}
 	return render(request, "Requests/request_form.html", context)

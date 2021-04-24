@@ -2,6 +2,11 @@
 
 {% block content %}
 <center>
+{% if message %}
+<div class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% else %}
 <form actions="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="hidden" name="next" value="{{ next }}" />
@@ -13,5 +18,6 @@
   {% endfor %}
     <input type="submit" name = "Submit" value = "Save">
 </form>
+{% endif %}
 </center>
 {% endblock %}

@@ -5,6 +5,11 @@
 
 {% block content %}
 <center>
+{% if message %}
+<div class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% else %}
 <p>{% block message %}{% endblock %}</p>
 <form actions = "" method ="POST">
     {% csrf_token %}
@@ -12,6 +17,7 @@
     {% endblock %}
     <input type = "submit" name = "Yes I'm sure"> 
 </form>
+{% endif %}
 </center>
 
 {% endblock %}

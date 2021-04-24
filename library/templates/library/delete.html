@@ -4,12 +4,18 @@
 
 {% block body %}
 <center>
+{% if message %}
+<div class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% else %}
 <p>Are you sure you want to delete {{item.book_title}} from the records?</p>
 <form actions = "{% url 'delete' item.id %}" method ="POST">
     {% csrf_token %}
     <a href = "{% url 'library' %}">Cancel</a>
     <input type = "submit" name = "Yes I'm sure"> 
 </form>
+{% endif %}
 </center>
 
 {% endblock %}
