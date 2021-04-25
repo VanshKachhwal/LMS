@@ -151,7 +151,7 @@ def productView(request, myid):
 	return render(request, 'library/prodView.html', context)
 
 def searchMatch(query, item):
-    if query in query in item.book_title.lower() or query in item.genre.lower() or query in item.book_author.lower() or query in item.isbn :
+    if query.lower() in item.book_title.lower() or query.lower() in item.genre.lower() or query.lower() in item.book_author.lower() or query.lower() in item.isbn :
         return True
     else:
         return False
