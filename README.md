@@ -33,6 +33,7 @@ Clone the repository on your device.
 In the cmd enter 
 ``` pip install django``` 
 ``` pip install social-auth-app-django```
+``` pip install pillow```
 
 ## Migrations and running server
 Navigate to the same directory as manage.py and in the command line type the following commands
@@ -43,6 +44,9 @@ Navigate to the same directory as manage.py and in the command line type the fol
 ## Ready to go
 The development server is finally up. Open chrome/firefox and in search bar type
 ```  localhost:8000/ ```
+
+## Caution:
+If you are accessing multiple users account from same chrome window you are directly going to login to account of previous user due to the same reason that if you once login to google from same chrome window, if you again search facebook you are already logged in, hence to access multiple users, use multiple chrome windows.
 
 Remember to access through localhost and not 127.0.0.1 as facebook signin may have some validation issues with it! As Kanye west said:
 ```  We live in future so present is our past:) ```
