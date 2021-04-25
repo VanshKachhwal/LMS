@@ -21,6 +21,7 @@ Library management Web Application
 17. Books are categorized according to genres in library/similar books.
 18. Checks for username not taken and email id not taken.
 19. Touch of appealing frontend with carousels, managed comments and what not!
+20. Live carousels, dynamic request system, comments and reply
 <br> 
 
 # Setting up:
