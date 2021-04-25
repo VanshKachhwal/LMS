@@ -2,6 +2,7 @@
 {% load static %}
 {% load lib_tags %}
 {% load humanize %}
+
 {% block body %}
 <div class="container my-4">
     <div class="col-md-4">
@@ -15,40 +16,40 @@
                 <br>
                 <div class="row">
                     <center>
-                    {% if product.availability != 0 %}
-                    {%if already_bor or already_sent%}
-                    <a href="{% url 'create_request' product.id %}">
-                        <button class="btn btn-primary mx-3" disabled>Rent</button>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'create_request' product.id %}">
-                        <button class="btn btn-primary mx-3" >Rent</button>
-                    </a>
-                    {% endif %}
-                    <!-- <button class="btn btn-primary">Add To Cart</button> -->
+                        {% if product.availability != 0 %}
+                        {%if already_bor or already_sent%}
+                        <a href="{% url 'create_request' product.id %}">
+                            <button class="btn btn-primary mx-3" disabled>Rent</button>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'create_request' product.id %}">
+                            <button class="btn btn-primary mx-3">Rent</button>
+                        </a>
+                        {% endif %}
+                        <!-- <button class="btn btn-primary">Add To Cart</button> -->
 
-                    {% else %}
-                    {% if request.user|has_group:"Librarians" %}
-                    {% else %}
-                    
+                        {% else %}
+                        {% if request.user|has_group:"Librarians" %}
+                        {% else %}
+
                         <h3>Sorry this book is out of stock!!</h3>
-                    
-                    {% endif %}
-                    {% endif %}
-                    {% if request.user|has_group:"Librarians" %}
 
-                    <a href="{% url 'update' product.id %}">
-                        <button class="btn btn-primary mx-3">Update</button>
-                    </a>
-                    <!-- <button class="btn btn-primary">Add To Cart</button> -->
-                    
-                    <nbsp></nbsp>
-                    <a href="{% url 'delete' product.id %}">
-                        <button class="btn btn-primary mx-3">Delete</button>
-                    </a>
-                    <!-- <button class="btn btn-primary">Add To Cart</button> -->
-                    
-                    {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% if request.user|has_group:"Librarians" %}
+
+                        <a href="{% url 'update' product.id %}">
+                            <button class="btn btn-primary mx-3">Update</button>
+                        </a>
+                        <!-- <button class="btn btn-primary">Add To Cart</button> -->
+
+                        <nbsp></nbsp>
+                        <a href="{% url 'delete' product.id %}">
+                            <button class="btn btn-primary mx-3">Delete</button>
+                        </a>
+                        <!-- <button class="btn btn-primary">Add To Cart</button> -->
+
+                        {% endif %}
                     </center>
                 </div>
             </div>
@@ -58,16 +59,17 @@
 
     <div class="card" style="width: 70rem;">
         <div class="card-body">
-            
-                <h3 class="card-title">{{product.book_title}}</h3>
-                <h4 class="card-subtitle mb-2 text-muted">{{product.genre}}</h4>
-                <br>
-                <p class="card-text"><b>Author - {{product.book_author}} </b></p>
-                <p class="card-text"><b>Publisher - {{product.book_publisher}} </b></p>
-                <p class="card-text"><b>Availability - {{product.availability}} </b></p>
-                <p class="card-text"><b>ISBN - {{product.isbn}} </b></p>
-                <p class="card-text">{{product.summary}}</p>
-            
+
+            <h3 class="card-title">{{product.book_title}}</h3>
+            <h4 class="card-subtitle mb-2 text-muted">{{product.genre}}</h4>
+            <p>Rating = {{rating}}({{totalRatings}})</p>
+            <br>
+            <p class="card-text"><b>Author - {{product.book_author}} </b></p>
+            <p class="card-text"><b>Publisher - {{product.book_publisher}} </b></p>
+            <p class="card-text"><b>Availability - {{product.availability}} </b></p>
+            <p class="card-text"><b>ISBN - {{product.isbn}} </b></p>
+            <p class="card-text">{{product.summary}}</p>
+
 
 
         </div>
@@ -79,6 +81,30 @@
 <div class="container">
     <hr>
     <h2> Comments and Reviews({{comments.count}})</h2>
+    {% if urating == None %}
+    <div class="rating rating2">
+
+        
+        <a href="{% url 'starRating' product.id 5 %}" title="Give 5 stars">★</a>
+
+        <a href="{% url 'starRating' product.id 4 %}" title="Give 4 stars">★</a>
+
+        <a href="{% url 'starRating' product.id 3 %}" title="Give 3 stars">★</a>
+
+        <a href="{% url 'starRating' product.id 2 %}" title="Give 2 stars">★</a>
+
+        <a href="{% url 'starRating' product.id 1 %}" title="Give 1 star">★</a>
+        
+
+
+    </div>
+    {% else %}
+    <div class="star-ratings-css">
+    <div class="star-ratings-css-top" style="width: {{urating}}">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    </div>
+    {% endif %}
     {% if request.user.is_authenticated %}
     <form action="{% url 'postComment' %}" method="post">
         {% csrf_token %}

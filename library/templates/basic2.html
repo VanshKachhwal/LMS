@@ -60,11 +60,102 @@
 		body .no-padding {
 			padding-left: 0,
 		}
+
+		.rating {
+			width: 270px;
+			margin: 0 auto 1em;
+			font-size: 45px;
+			overflow: hidden;
+		}
+
+		.rating input {
+			float: right;
+			opacity: 0;
+			position: absolute;
+		}
+
+		.rating a,
+		.rating label {
+			float: right;
+			color: #aaa;
+			text-decoration: none;
+			-webkit-transition: color .4s;
+			-moz-transition: color .4s;
+			-o-transition: color .4s;
+			transition: color .4s;
+		}
+
+		.rating label:hover~label,
+		.rating input:focus~label,
+		.rating label:hover,
+		.rating a:hover,
+		.rating a:hover~a,
+		.rating a:focus,
+		.rating a:focus~a {
+			color: orange;
+			cursor: pointer;
+		}
+
+		.rating2 {
+			direction: rtl;
+		}
+
+		.rating2 a {
+			float: none
+		
+		}
+		      .star-ratings-css {
+            unicode-bidi: bidi-override;
+            color: #c5c5c5;
+            font-size: 25px;
+            height: 10px;
+            width: 100px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0;
+            text-shadow: 0px 1px 0 #a2a2a2;
+        }
+
+        .star-ratings-css-top {
+            color: #e7711b;
+            padding: 0;
+            position: absolute;
+            z-index: 1;
+            display: block;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .star-ratings-css-bottom {
+            padding: 0;
+            display: block;
+            z-index: 0;
+        }
+
+        .star-ratings-sprite {
+            background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+            font-size: 0;
+            height: 21px;
+            line-height: 0;
+            overflow: hidden;
+            text-indent: -999em;
+            width: 110px;
+            margin: 0 auto;
+        }
+
+        .star-ratings-sprite-rating {
+            background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+            background-position: 0 100%;
+            float: left;
+            height: 21px;
+            display: block;
+        }
 	</style>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="collapse navbar-collapse">
 			<div class="navbar-header">
-				<a class= " navbar-brand" href = "#">LMS</a>
+				<a class=" navbar-brand" href="#">LMS</a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="nav-item"><a href="{% url 'home' %}"><span
@@ -106,7 +197,7 @@
 </head>
 
 <body>
-	
+
 	{% block body %} {% endblock %}
 
 	<script src="https://code.jquery.com/jquery-3.3.1.js"

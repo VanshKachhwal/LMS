@@ -9,10 +9,11 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from math import ceil
 import json
-from .models import Request, BookComment, Book, BorrowedBook
+from .models import Request, BookComment, Book, BorrowedBook, StarRating
 from django.utils.timezone import now
 # from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 #Dashboard views
 def has_group(user, group_name):
@@ -130,6 +131,18 @@ def delete(request, id):
 @login_required
 def productView(request, myid):
 	product = Book.objects.filter(id=myid)
+	rating = product[0].rating
+	if StarRating.objects.filter(book = product[0]).exists():
+		totalRatings = len(StarRating.objects.filter(book = product[0]))
+		pass
+	else:
+		totalRatings  = 0
+		rating = 0.00
+	uratingobj = StarRating.objects.filter(user = request.user, book = product[0])
+	if uratingobj.exists():
+		urating = uratingobj[0].strating
+	else:
+		urating = None
 	comments = BookComment.objects.filter(book = product[0], parent= None)
 	replies = BookComment.objects.filter(book =product[0]).exclude(parent = None)
 	replyDict = {}
@@ -147,7 +160,11 @@ def productView(request, myid):
 			replyDict[reply.parent.sno] = [reply]
 		else:
 			replyDict[reply.parent.sno].append(reply)
-	context = {'product':product[0], 'comments':comments, 'replyDict': replyDict, 'already_sent':already_sent, 'already_bor':already_bor}
+	
+	if urating!= None:
+		urating = str(urating*20) + "%"
+	print(product[0].rating)
+	context = {'product':product[0], 'comments':comments, 'replyDict': replyDict, 'already_sent':already_sent, 'already_bor':already_bor, 'rating':rating, 'urating':urating, 'totalRatings':totalRatings}
 	return render(request, 'library/prodView.html', context)
 
 def searchMatch(query, item):
@@ -303,3 +320,23 @@ def create_renew_request(request, id):
 		message = "Renewing requests for this borrowed book is restricted for the respective user only!"
 	context = {'form': form, 'message':message}
 	return render(request, "Requests/request_form.html", context)
+
+def starRating(request, myid, rating):
+	user = request.user
+	book = Book.objects.get(id = myid)
+	if StarRating.objects.filter(user = user, book = book).exists():
+		a = StarRating.objects.filter(user = user, book = book)[0]
+		a.delete()
+		r = StarRating(user = user, book = book, strating= rating)
+		r.save()
+	else:
+		r = StarRating(user = user, book = book, strating= rating)
+		r.save()
+	totalRatings = len(StarRating.objects.filter(book = book))
+	r = book.rating
+	book.rating = round((r*(totalRatings-1) + rating)/totalRatings, 2)
+	book.save()
+	print(book.rating)
+	return redirect(f'/lms/library/products/{book.id}')
+
+

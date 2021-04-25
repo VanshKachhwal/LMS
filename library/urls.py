@@ -30,6 +30,9 @@ urlpatterns = [
     ##BookComments
     path('postComment', views.postComment, name="postComment"),
 
+    #StarRating
+    path('library/products/<int:myid>/<int:rating>', views.starRating, name="starRating"),
+
     #BorrowedBooks
     path("deposit/<int:id>", views.deposit, name="deposit"),
     path("create_renew_request/<int:id>", views.create_renew_request, name="create_renew_request"),

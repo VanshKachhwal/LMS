@@ -17,6 +17,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length = 30)
     image = models.ImageField(upload_to='images', default="")
     date_added = models.DateTimeField(default = now,editable = False)
+    rating = models.DecimalField(default = 0, decimal_places=2, max_digits=5, editable =False)
 
     def __str__(self):
         return self.book_title
@@ -51,3 +52,12 @@ class BorrowedBook(models.Model):
     fine = models.IntegerField(default = 0)
     accepted = models.DateTimeField(auto_now_add=True)
     time = models.IntegerField()
+
+class StarRating(models.Model):
+    sno= models.AutoField(primary_key=True)
+    strating=models.IntegerField(default = 0)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    book=models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.strating) + "..." + self.user.username
