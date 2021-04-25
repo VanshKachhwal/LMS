@@ -33,6 +33,7 @@ Clone the repository on your device.
 In the cmd enter 
 ``` pip install django``` 
 ``` pip install social-auth-app-django```
+``` pip install pillow```
 
 ## Migrations and running server
 Navigate to the same directory as manage.py and in the command line type the following commands
