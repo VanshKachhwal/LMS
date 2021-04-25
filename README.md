@@ -22,6 +22,7 @@ Library management Web Application
 18. Checks for username not taken and email id not taken.
 19. Touch of appealing frontend with carousels, managed comments and what not!
 20. Live carousels, dynamic request system, comments and reply
+21. Average Star Rating system in which each user can give star rating at most 1 time.
 <br> 
 
 # Setting up:
@@ -70,7 +71,6 @@ Remember to access through localhost and not 127.0.0.1 as facebook signin may ha
 
 # Screenshots:
 ![add_book](https://user-images.githubusercontent.com/78141706/115997741-ec9fb600-a601-11eb-9840-8cd1a42e5bd6.jpg)
-![comments1](https://user-images.githubusercontent.com/78141706/115997742-edd0e300-a601-11eb-91f8-8626230f3c99.jpg)
 ![hp1](https://user-images.githubusercontent.com/78141706/115997743-ee697980-a601-11eb-87c5-2070d860b607.jpg)
 ![hp2](https://user-images.githubusercontent.com/78141706/115997744-ee697980-a601-11eb-80bd-e865de40730c.jpg)
 ![library1](https://user-images.githubusercontent.com/78141706/115997745-ef021000-a601-11eb-878e-b13ebf7acfe3.jpg)
@@ -81,6 +81,9 @@ Remember to access through localhost and not 127.0.0.1 as facebook signin may ha
 ![requests1](https://user-images.githubusercontent.com/78141706/115997751-f0cbd380-a601-11eb-889a-ec33b89e0f67.jpg)
 ![search_bar](https://user-images.githubusercontent.com/78141706/115997753-f0cbd380-a601-11eb-965c-4489fcdefbc9.jpg)
 ![signup1](https://user-images.githubusercontent.com/78141706/115997755-f1646a00-a601-11eb-947d-378a5f0bdf28.jpg)
+![starRating1](https://user-images.githubusercontent.com/78141706/116003624-5e84f900-a61c-11eb-8a60-3d12bcfd5457.jpg)
+![starRating2](https://user-images.githubusercontent.com/78141706/116003626-5fb62600-a61c-11eb-8d7c-0b4d28702d9d.jpg)
+![starRating3](https://user-images.githubusercontent.com/78141706/116003648-78bed700-a61c-11eb-89a6-8d01ae7c8cf2.jpg)
 
 
 
