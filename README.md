@@ -22,7 +22,7 @@ Library management Web Application
 18. Checks for username not taken and email id not taken.
 19. Touch of appealing frontend with carousels, managed comments and what not!
 20. Live carousels, dynamic request system, comments and reply
-21. Average Star Rating system in which each user can give star rating at most 1 time.
+21. Average Star Rating system in which each user can give star rating at most 1 time to each book in the library.
 <br> 
 
 # Setting up:
