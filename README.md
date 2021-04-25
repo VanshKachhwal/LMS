@@ -72,11 +72,11 @@ As Kanye west said -
 1. Users
     | Username | Password |
     |---|---|
-    | user1 | user1 |
-    | user2 | user2 | 
-    | user3 | user3 | 
-    | user4 | user4 |
-    | user5 | user5 |
+    | user1 | pass1 |
+    | user2 | pass2 | 
+    | user3 | pass3 | 
+    | user4 | pass4 |
+    | user5 | pass5 |
 
 
 # Screenshots:
