@@ -141,7 +141,7 @@ def productView(request, myid):
 		already_bor = True
 	else:
 		already_bor = False
-	print(Request.objects.filter(borrower_id = request.user, book_id = product[0]), BorrowedBook.objects.filter(user = request.user, book = product[0]))
+	
 	for reply in replies:
 		if reply.parent.sno not in replyDict.keys():
 			replyDict[reply.parent.sno] = [reply]
@@ -182,7 +182,6 @@ def create_request(request, id):
 	form = RequestForm(initial={'borrower_id': request.user, 'book_id':book, 'renew':False})
 	if request.method == 'POST':
 		form = RequestForm(request.POST, request.FILES or None)
-		print(form.errors)
 		if form.is_valid():
 			form.save()
 			return redirect('/library')
@@ -291,13 +290,11 @@ def create_renew_request(request, id):
 	form = RequestForm(initial={'borrower_id': bor_book.user, 'book_id':book})
 	if request.method == 'POST':
 		form = RequestForm(request.POST, request.FILES or None)
-		# print(form.errors)
 		if form.is_valid():
 			form.save()
 			req = Request.objects.get(borrower_id= request.user, book_id = book)
 			req.renew = True
 			req.save()
-			print(req)
 			return redirect('/')
 	message = None
 	if Request.objects.filter(borrower_id = request.user, book_id = book).exists():
