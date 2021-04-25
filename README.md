@@ -46,7 +46,36 @@ The development server is finally up. Open chrome/firefox and in search bar type
 Remember to access through localhost and not 127.0.0.1 as facebook signin may have some validation issues with it! As Kanye west said:
 ```  We live in future so present is our past:) ```
 
-#Screenshots:
+## Accessing users and dummy data
+1. SuperUser/admin
+    - Username: admin
+    - Password: admin
+1. Librarian
+    - Username: lib1
+    - Password: lib1
+1. Users
+    | Username | Password |
+    |---|---|
+    | user1 | user1 |
+    | user2 | user2 | 
+    | user3 | user3 | 
+    | user4 | user4 |
+    | user5 | user5 |
+
+
+# Screenshots:
+![add_book](https://user-images.githubusercontent.com/78141706/115997499-f1b03580-a600-11eb-9b1b-20fb79f5cf29.jpg)
+![comments1](https://user-images.githubusercontent.com/78141706/115997503-f2e16280-a600-11eb-83b3-cfe6c013ec02.jpg)
+![hp1](https://user-images.githubusercontent.com/78141706/115997504-f379f900-a600-11eb-84fd-d5ed2d47d107.jpg)
+![hp2](https://user-images.githubusercontent.com/78141706/115997505-f379f900-a600-11eb-8ab7-c15df5374d6b.jpg)
+![library1](https://user-images.githubusercontent.com/78141706/115997506-f4128f80-a600-11eb-8d59-2b7331bfe317.jpg)
+![loginpage](https://user-images.githubusercontent.com/78141706/115997507-f4128f80-a600-11eb-9fe0-a3fca7df9dc2.jpg)
+![logout](https://user-images.githubusercontent.com/78141706/115997508-f4ab2600-a600-11eb-936f-7e3ef00f3110.jpg)
+![manage](https://user-images.githubusercontent.com/78141706/115997509-f4ab2600-a600-11eb-95fb-eb87d7af4b8c.jpg)
+![prodV1](https://user-images.githubusercontent.com/78141706/115997511-f543bc80-a600-11eb-966e-6205400877d3.jpg)
+![requests1](https://user-images.githubusercontent.com/78141706/115997512-f5dc5300-a600-11eb-8eb1-2553fff64f37.jpg)
+![search_bar](https://user-images.githubusercontent.com/78141706/115997514-f5dc5300-a600-11eb-85a8-474b6bc69684.jpg)
+![signup1](https://user-images.githubusercontent.com/78141706/115997516-f674e980-a600-11eb-89cb-61f2a5ac2836.jpg)
 
 
 
